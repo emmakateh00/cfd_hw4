@@ -1,0 +1,18 @@
+c = 0.5
+v = 1.0
+# x values (i)
+xmin = 0
+xmax = 25.0
+nx = int(101.0)  # number of x steps
+dx = 0.25
+# t values (n)
+tmin = 0.0  # seconds
+tmax = 10.0  # seconds
+dt = (v * dx) / c
+nt = int(tmax / dt + 0.5)  # number of time steps
+
+
+def ftcs(n, i):
+    while n in range(1, nt):
+        while i in range(0, nx):
+            u[i, n+1] = u[i, n] - 0.5 * v * (u[i+1, n] - u[i-1, n])
