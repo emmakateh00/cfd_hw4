@@ -1,0 +1,48 @@
+import matplotlib.pyplot as plt
+import numpy as np
+from ftcs import ftcs
+from ftbs import ftbs
+# from LaxFriedrics import lf
+
+c = 0.5
+v = 1.0
+# x values (i)
+xmin = 0
+xmax = 25.0
+nx = int(101.0)  # number of x steps
+dx = 0.25
+# t values (n)
+tmin = 0.0  # seconds
+tmax = 10.0  # seconds
+dt = (v * dx) / c
+nt = int(tmax / dt + 0.5)  # number of time steps
+n = 0
+
+# u = matrix of nx by nt
+# u matrix, first row: initial conditions, second row: delta t, third row: 2 delta t
+u = np.zeros((nx, nt))
+# u(x,t) = u(x-c*t, 0)
+
+x = np.zeros((nx))
+for i in range(0, nx):
+    x[i] = xmin + i * dx
+
+
+def init_cond(x):
+    for i in range(0, nx):
+        if 0 <= x[i] <= 3:
+            u[i, 0] = x[i]
+        elif 3 <= x[i] <= 6:
+            u[i, 0] = 6 - x[i]
+        else:
+            u[i, 0] = 0
+
+
+init_cond(x)
+ftcs(n, i)
+# ftbs(n, i)
+# lf(n, i)
+print(u)
+
+# plt.plot(u)
+# plt.show()
